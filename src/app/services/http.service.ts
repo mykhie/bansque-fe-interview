@@ -21,22 +21,23 @@ export class HttpService {
   handleError(error: any): any {
     let errorMsg: string = this.returnHttpErrorMessage(error);
     return {
-      code: error?.code,
+      code: error?.status,
       message: errorMsg
     };
   }
 
   returnHttpErrorMessage(error: any): string {
 
+
     if (error.error instanceof ErrorEvent) {
       return `Error: ${error.error.message}`;
     }
 
-    if (error?.code.toString().startsWith("5")) {
+    if (error?.status.toString().startsWith("5")) {
       return config.SERVER_ERROR_FAILURE;
     }
     // you can include the error body
-    switch (error?.code) {
+    switch (error?.status) {
       case 0: {
         return `A network related error occurred: ${error.message}`;
       }

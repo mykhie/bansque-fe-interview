@@ -2,6 +2,7 @@ import {Injectable, Injector} from '@angular/core';
 import {HttpService} from "./http.service";
 import {environment} from "../../environments/environment";
 import {catchError, map, throwError} from "rxjs";
+import {ConversionModel} from "../models/conversion-model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class CurrencyService extends HttpService {
     super(injector);
   }
 
-  getCurrencyConversion(to: string, from: string, amount: number): any {
-    return this.httpClient.get<any>(`${environment.apiUrl}/convert?to=${to}&from=${from}$amount=${amount}`).pipe(map(res => {
+  getCurrencyConversion(data: ConversionModel): any {
+    return this.httpClient.get<any>(`${environment.apiUrl}/convert?to=${data.to}&from=${data.from}&amount=${data.amount}`).pipe(map(res => {
       return res;
     }))
       .pipe(
@@ -22,10 +23,11 @@ export class CurrencyService extends HttpService {
         })
       );
   }
+
   getCurrencyList(): any {
     return this.httpClient.get<any>(`${environment.apiUrl}/symbols`).pipe(map(res => {
-      if(res?.symbols){
-        return  Object.keys(res?.symbols);
+      if (res?.symbols) {
+        return Object.keys(res?.symbols);
       }
       return res;
     }))

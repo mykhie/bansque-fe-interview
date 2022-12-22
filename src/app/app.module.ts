@@ -11,6 +11,9 @@ import { BaseComponent } from './main/base/base.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
+import {ToastrModule} from "ngx-toastr";
+import { ConversionFormComponent } from './main/conversion-form/conversion-form.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -18,15 +21,18 @@ import {TokenInterceptor} from "./interceptors/token.interceptor";
     HomeComponent,
     CurrencyPageComponent,
     PageNotFoundComponent,
-    BaseComponent
+    BaseComponent,
+    ConversionFormComponent
   ],
 
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {
