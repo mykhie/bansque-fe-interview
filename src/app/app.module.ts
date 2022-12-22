@@ -8,6 +8,9 @@ import { PageNotFoundComponent } from './main/page-not-found/page-not-found.comp
 import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import { BaseComponent } from './main/base/base.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {TokenInterceptor} from "./interceptors/token.interceptor";
 
 @NgModule({
   declarations: [
@@ -17,12 +20,19 @@ import { BaseComponent } from './main/base/base.component';
     PageNotFoundComponent,
     BaseComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
