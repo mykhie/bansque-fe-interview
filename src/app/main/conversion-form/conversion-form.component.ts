@@ -30,17 +30,15 @@ export class ConversionFormComponent extends BaseComponent {
   }
 
   override ngOnInit(): void {
-    // this.getCurrencyList();
+    this.getCurrencyList();
     this.currencyService.formUpdates.subscribe(res => {
-      console.log(res);
       this.conversionForm.patchValue(res);
+      this.getConversion();
     })
   }
 
   getConversion() {
     this.submitted = true;
-    console.log('called');
-    return;
     if (this.conversionForm.invalid) {
       return;
     }
@@ -81,6 +79,13 @@ export class ConversionFormComponent extends BaseComponent {
     if (this.conversionFormControl['from'].invalid || this.conversionFormControl['to'].invalid) {
       this.showError('Please select both From and To currency');
     }
+
+    let a, b = undefined;
+    [a, b] = [this.conversionFormControl['from'].value, this.conversionFormControl['to'].value];
+    [a, b] = [b, a];
+    this.conversionFormControl['from'].setValue(a);
+    this.conversionFormControl['to'].setValue(b);
+    this.getConversion();
   }
 
 }

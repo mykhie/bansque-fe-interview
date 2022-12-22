@@ -1,15 +1,8 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
   Component,
-  Injector,
-  OnInit,
-  ViewChild
+  Injector
 } from '@angular/core';
 import {BaseComponent} from "../base/base.component";
-import {ConversionFormComponent} from "../conversion-form/conversion-form.component";
 
 @Component({
   selector: 'app-currency-page',
@@ -20,8 +13,7 @@ export class CurrencyPageComponent extends BaseComponent {
 
   selectedFromCurrency: any = undefined;
   selectedToCurrency: any = undefined;
-
-  @ViewChild(ConversionFormComponent) conversionFormComponent: ConversionFormComponent;
+  currencyName: string = '';
 
   constructor(injector: Injector) {
     super(injector);

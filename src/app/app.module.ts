@@ -14,6 +14,7 @@ import {TokenInterceptor} from "./interceptors/token.interceptor";
 import {ToastrModule} from "ngx-toastr";
 import { ConversionFormComponent } from './main/conversion-form/conversion-form.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { HistoricalCurrencyDataComponent } from './main/historical-currency-data/historical-currency-data.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     CurrencyPageComponent,
     PageNotFoundComponent,
     BaseComponent,
-    ConversionFormComponent
+    ConversionFormComponent,
+    HistoricalCurrencyDataComponent
   ],
 
   imports: [
