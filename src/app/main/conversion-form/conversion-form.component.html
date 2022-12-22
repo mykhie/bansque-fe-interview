@@ -1,15 +1,21 @@
+<h4 *ngIf="fromCurrency">{{fromCurrency}} - {{returnCurrencyName}}</h4>
 <div class="card p-3">
   <form [formGroup]="conversionForm" (ngSubmit)="getConversion()">
     <div class="row ">
       <div class="col-md-4 col-12 py-1">
         <div class="">
           <label class="fw-bold py-1">Amount</label>
-          <input class="form-control" placeholder="input amount" formControlName="amount">
+          <input class="form-control"
+                 [class.border-danger]="submitted && conversionFormControl['amount'].errors"
+                 placeholder="input amount" formControlName="amount">
           <div *ngIf="submitted && conversionFormControl['amount'].errors"
                [style.display]="'block'" class="invalid-feedback">
 
             <div *ngIf="conversionFormControl['amount'].errors['required']">
               Amount is required
+            </div>
+            <div *ngIf="conversionFormControl['amount'].errors['pattern']">
+              Please enter a valid amount
             </div>
           </div>
         </div>
@@ -19,10 +25,11 @@
           <div class="col-md-4 col-12 py-1">
             <label class="fw-bold py-1">From</label>
             <select class="form-control "
+                    [class.border-danger]="submitted && conversionFormControl['from'].errors"
                     [attr.disabled]="fromCurrency"
                     formControlName="from">
               <option></option>
-              <option *ngFor="let currency of currencyList"
+              <option *ngFor="let currency of getCurrencyKeys"
                       [value]="currency"
               >
                 {{currency}}
@@ -36,7 +43,9 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-4 py-1 align-self-end text-center">
+          <div class="col-12 col-md-4 py-1 align-self-end text-center"
+
+          >
                 <span class="btn btn-outline-secondary pt-md-2"
                       (click)="toggleCurrencies()"
                       [title]="'Click to toggle currencies'">
@@ -46,9 +55,11 @@
           </div>
           <div class="col-12 col-md-4 py-1">
             <label class="fw-bold py-1">To</label>
-            <select class="form-control" formControlName="to">
+            <select class="form-control"
+                    [class.border-danger]="submitted && conversionFormControl['to'].errors"
+                    formControlName="to">
               <option></option>
-              <option *ngFor="let currency of currencyList"
+              <option *ngFor="let currency of getCurrencyKeys"
                       [value]="currency"
               >
                 {{currency}}
@@ -86,12 +97,14 @@
         1 {{currencyDetails?.query.from}} = {{currencyDetails?.info.rate| currency : currencyDetails?.query.to + " "}}
       </div>
     </div>
-    <div class="col">
+    <div class="col-12  py-1 py-md-0"
+         [class.col-md-4]="showMoreLink"
+         [class.col-md-8]="!showMoreLink">
       <div class="card p-4 text-center  fs-2">
         {{currencyDetails?.result| currency : currencyDetails?.query.to + " "}}
       </div>
     </div>
-    <div class="col align-self-center" *ngIf="showMoreLink">
+    <div class="col-12 col-md-4 py-1 py-md-0 align-self-center" *ngIf="showMoreLink">
       <a class="btn btn-primary w-100 text-decoration-none"
          [routerLink]="['currency-details',currencyDetails?.query.from,currencyDetails?.query.to]">More details</a>
     </div>

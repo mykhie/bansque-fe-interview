@@ -1,6 +1,6 @@
 import {
   Component,
-  Injector
+  Injector, OnInit
 } from '@angular/core';
 import {BaseComponent} from "../base/base.component";
 
@@ -9,7 +9,7 @@ import {BaseComponent} from "../base/base.component";
   templateUrl: './currency-page.component.html',
   styleUrls: ['./currency-page.component.scss']
 })
-export class CurrencyPageComponent extends BaseComponent {
+export class CurrencyPageComponent extends BaseComponent implements OnInit{
 
   selectedFromCurrency: any = undefined;
   selectedToCurrency: any = undefined;

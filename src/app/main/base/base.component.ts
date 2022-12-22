@@ -26,6 +26,10 @@ export class BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateCurrentPageTitle();
+  }
+  updateCurrentPageTitle(title = 'Currency Converter') {
+    document.title = title;
   }
 
   isLoadingTrue() {

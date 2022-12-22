@@ -27,10 +27,8 @@ export class CurrencyService extends HttpService {
 
   getCurrencyList(): any {
     return this.httpClient.get<any>(`${environment.apiUrl}/symbols`).pipe(map(res => {
-      if (res?.symbols) {
-        return Object.keys(res?.symbols);
-      }
-      return res;
+
+      return res?.symbols;
     }))
       .pipe(
         catchError(error => {

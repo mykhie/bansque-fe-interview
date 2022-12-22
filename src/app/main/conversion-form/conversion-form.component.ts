@@ -2,17 +2,18 @@ import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular
 import {Validators} from "@angular/forms";
 import {ConversionModel} from "../../models/conversion-model";
 import {BaseComponent} from "../base/base.component";
+import {config} from "../../constants/constants";
 
 @Component({
   selector: 'app-conversion-form',
   templateUrl: './conversion-form.component.html',
   styleUrls: ['./conversion-form.component.scss']
 })
-export class ConversionFormComponent extends BaseComponent {
+export class ConversionFormComponent extends BaseComponent implements OnInit {
 
   public conversionForm = this.formGroupBuilder.group(
     {
-      amount: [1, [Validators.required]],
+      amount: [1, [Validators.required, Validators.pattern(config.DECIMAL_REGEX)]],
       to: ['', [Validators.required]],
       from: ['', [Validators.required]]
     }
@@ -31,9 +32,12 @@ export class ConversionFormComponent extends BaseComponent {
 
   override ngOnInit(): void {
     this.getCurrencyList();
+    this.conversionForm.reset();
     this.currencyService.formUpdates.subscribe(res => {
       this.conversionForm.patchValue(res);
-      this.getConversion();
+      if (!this.showMoreLink) {
+        this.getConversion();
+      }
     })
   }
 
@@ -86,6 +90,14 @@ export class ConversionFormComponent extends BaseComponent {
     this.conversionFormControl['from'].setValue(a);
     this.conversionFormControl['to'].setValue(b);
     this.getConversion();
+  }
+
+  get getCurrencyKeys() {
+    return this.currencyList ? Object.keys(this.currencyList) : [];
+  }
+
+  get returnCurrencyName() {
+    return this.currencyList ? this.currencyList[this.fromCurrency] : '';
   }
 
 }

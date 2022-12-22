@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://api.apilayer.com/fixer',
-  apiKey: '1ZAqMKIIs5DBDozaifc2c8PIlC4aETm5'
+  apiKey: 'hT2bZgUP9zI7yTtKJf64bjkeFRA396cy'
 };
 
 /*
