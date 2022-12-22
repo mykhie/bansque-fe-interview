@@ -106,9 +106,21 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "banque-fe-interview"
+  "defaultProject": "banque-fe-interview",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

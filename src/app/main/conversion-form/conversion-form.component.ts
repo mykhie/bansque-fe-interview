@@ -24,25 +24,34 @@ export class ConversionFormComponent extends BaseComponent {
   @Input() showMoreLink = true;
   @Input() fromCurrency: any = undefined;
   @Output() readonly conversionEmitter = new EventEmitter<any>();
+
   constructor(injector: Injector) {
     super(injector);
   }
 
   override ngOnInit(): void {
-    this.getCurrencyList();
+    // this.getCurrencyList();
+    this.currencyService.formUpdates.subscribe(res => {
+      console.log(res);
+      this.conversionForm.patchValue(res);
+    })
   }
 
   getConversion() {
     this.submitted = true;
+    console.log('called');
+    return;
     if (this.conversionForm.invalid) {
       return;
     }
+
     let data: ConversionModel = {
       amount: this.conversionFormControl['amount'].value,
       from: this.conversionFormControl['from'].value,
       to: this.conversionFormControl['to'].value,
     }
     this.isConverting = true;
+    this.conversionEmitter.emit(undefined);
     this.currencyService.getCurrencyConversion(data).subscribe(res => {
       this.isConverting = false;
       this.conversionEmitter.emit(res);

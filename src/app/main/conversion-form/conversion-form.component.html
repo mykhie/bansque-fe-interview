@@ -18,7 +18,6 @@
         <div class="row">
           <div class="col-md-4 col-12 py-1">
             <label class="fw-bold py-1">From</label>
-            {{fromCurrency}}
             <select class="form-control "
                     [attr.disabled]="fromCurrency"
                     [value]="fromCurrency"
@@ -80,12 +79,12 @@
   <div class="row" *ngIf="currencyDetails&&!isConverting">
     <div class="col-12 col-md-4 align-self-center">
       <div class="card p-2 text-center">
-        1 {{currencyDetails?.query.from}} = {{currencyDetails?.info.rate}} {{currencyDetails?.query.to}}
+        1 {{currencyDetails?.query.from}} = {{currencyDetails?.info.rate| currency : currencyDetails?.query.to+" "}}
       </div>
     </div>
     <div class="col">
       <div class="card p-4 text-center  fs-2">
-        {{currencyDetails?.result}} {{currencyDetails?.query.to}}
+        {{currencyDetails?.result| currency : currencyDetails?.query.to+" "}}
       </div>
     </div>
     <div class="col align-self-center" *ngIf="showMoreLink">
