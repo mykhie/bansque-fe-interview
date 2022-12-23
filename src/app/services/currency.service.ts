@@ -8,7 +8,7 @@ import {ConversionModel} from "../models/conversion-model";
   providedIn: 'root'
 })
 export class CurrencyService extends HttpService {
-  formUpdates: BehaviorSubject<Array<any>> = new BehaviorSubject<Array<any>>([]);
+  formUpdates: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
 
   constructor(injector: Injector) {
     super(injector);

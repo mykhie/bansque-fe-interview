@@ -1,4 +1,4 @@
-import {Component, Injector, Input} from '@angular/core';
+import {Component, Injector, Input, OnInit} from '@angular/core';
 import {ChartType} from "chart.js";
 import Chart from 'chart.js/auto';
 import {BaseComponent} from "../base/base.component";
@@ -8,7 +8,7 @@ import {BaseComponent} from "../base/base.component";
   templateUrl: './historical-currency-data.component.html',
   styleUrls: ['./historical-currency-data.component.scss']
 })
-export class HistoricalCurrencyDataComponent extends BaseComponent {
+export class HistoricalCurrencyDataComponent extends BaseComponent implements OnInit{
 
   @Input() currencyFrom: string;
   @Input() currencyTo: string;
@@ -17,15 +17,20 @@ export class HistoricalCurrencyDataComponent extends BaseComponent {
   chart: Chart<ChartType, string[], unknown>;
   public historicalData: any = undefined
   public dataSet: any = undefined
-  public months: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  public months: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   constructor(injector: Injector) {
     super(injector);
   }
 
   override ngOnInit() {
-    this.historicalData = this.currencyService.getHistoricalData(this.currencyFrom, this.currencyTo);
-    this.returnCalendarDays();
+
+    this.currencyService.formUpdates.subscribe(res => {
+      this.currencyFrom = res?.from;
+      this.currencyTo = res?.to;
+      this.historicalData = this.currencyService.getHistoricalData(res?.from, res?.to);
+      this.returnCalendarDays();
+    });
   }
 
   returnCalendarDays() {
@@ -51,7 +56,7 @@ export class HistoricalCurrencyDataComponent extends BaseComponent {
   }
 
   createChart() {
-
+    this.chart?.destroy();
     this.chart = new Chart("MyChart", {
       type: 'bar', //this denotes tha type of chart
 
