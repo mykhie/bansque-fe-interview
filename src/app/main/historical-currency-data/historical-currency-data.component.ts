@@ -1,30 +1,52 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ChartDataset, ChartOptions, ChartType} from "chart.js";
+import {Component, Injector, Input} from '@angular/core';
+import {ChartType} from "chart.js";
 import Chart from 'chart.js/auto';
+import {BaseComponent} from "../base/base.component";
 
 @Component({
   selector: 'app-historical-currency-data',
   templateUrl: './historical-currency-data.component.html',
   styleUrls: ['./historical-currency-data.component.scss']
 })
-export class HistoricalCurrencyDataComponent implements OnInit {
+export class HistoricalCurrencyDataComponent extends BaseComponent {
 
   @Input() currencyFrom: string;
   @Input() currencyTo: string;
 
-
-  public barChartColors: object[];
+  public labels: any[];
   chart: Chart<ChartType, string[], unknown>;
+  public historicalData: any = undefined
+  public dataSet: any = undefined
+  public months: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-  constructor() {
-
+  constructor(injector: Injector) {
+    super(injector);
   }
 
-  ngOnInit() {
-    this.barChartColors = [
-      {backgroundColor: 'red'},
-      {backgroundColor: 'green'},
-    ];
+  override ngOnInit() {
+    this.historicalData = this.currencyService.getHistoricalData(this.currencyFrom, this.currencyTo);
+    this.returnCalendarDays();
+  }
+
+  returnCalendarDays() {
+    // this loads months
+    this.labels = Object.keys(this.historicalData);
+    this.labels = this.labels.map(mon => this.months[new Date(mon).getMonth()]);
+
+
+    this.dataSet = [
+      {
+        label: this.currencyFrom,
+        data: Object.values(this.historicalData).map(val => val[this.currencyFrom]),
+        backgroundColor: 'limegreen'
+      },
+      {
+        label: this.currencyTo,
+        data: Object.values(this.historicalData).map(val => val[this.currencyTo]),
+        backgroundColor: 'orange'
+      },
+    ]
+    // create chart
     this.createChart();
   }
 
@@ -34,19 +56,8 @@ export class HistoricalCurrencyDataComponent implements OnInit {
       type: 'bar', //this denotes tha type of chart
 
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-        datasets: [
-          {
-            label: this.currencyFrom,
-            data: ['467', '576', '572', '79', '92','574', '573', '576'],
-            backgroundColor: 'limegreen'
-          },
-          {
-            label: this.currencyTo,
-            data: ['542', '542', '536', '327', '17','0.00', '538', '541'],
-            backgroundColor: 'orange'
-          }
-        ]
+        labels: this.labels,
+        datasets: this.dataSet
       },
       options: {
         aspectRatio: 2.5

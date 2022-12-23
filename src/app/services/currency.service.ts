@@ -40,4 +40,32 @@ export class CurrencyService extends HttpService {
   updateConversionForm(formData: any) {
     this.formUpdates.next(formData);
   }
+
+  getHistoricalData(currencyFrom = 'EUR', currencyTo = 'USD') {
+
+    let data = {
+      "success": true,
+      "timeseries": true,
+      "start_date": "2012-05-01",
+      "end_date": "2012-05-03",
+      "base": currencyFrom,
+      "rates": {
+        "2012-01-31": {
+          [currencyFrom]: 1.322891,
+          [currencyTo]: 1.278047,
+        },
+        "2012-02-28": {
+          [currencyFrom]: 1.315066,
+          [currencyTo]: 1.274202,
+        },
+        "2012-03-31": {
+          [currencyFrom]: 1.314491,
+          [currencyTo]: 1.280135,
+        }
+      }
+    };
+    console.log(data);
+    return data.rates;
+
+  }
 }
