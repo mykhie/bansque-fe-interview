@@ -1,7 +1,6 @@
-import {Component, Injector, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from "../base/base.component";
-import {Validators} from "@angular/forms";
-import {ConversionModel} from "../../models/conversion-model";
+
 
 @Component({
   selector: 'app-home',
