@@ -2,10 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import {UrlConfig} from "./url-config";
+
 export const environment = {
   production: false,
-  apiUrl: 'https://api.apilayer.com/fixer',
-  apiKey: 'hT2bZgUP9zI7yTtKJf64bjkeFRA396cye'
+  apiUrl: UrlConfig.DEVELOPMENT.apiUrl,
+  apiKey: UrlConfig.DEVELOPMENT.apiKey,
 };
 
 /*
