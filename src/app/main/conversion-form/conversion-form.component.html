@@ -1,4 +1,14 @@
-<h4 class="page-header" *ngIf="fromCurrency">{{fromCurrency}} - {{returnCurrencyName}}</h4>
+<div class="row py-2">
+  <h4 class="page-header col" *ngIf="fromCurrency">
+    {{fromCurrency}} - {{returnCurrencyName}}
+  </h4>
+  <div class="col text-end align-self-center">
+    <a [routerLink]="['/']" class="btn btn-primary">
+      <i class="bi bi-back"></i> Back to Home
+    </a>
+  </div>
+</div>
+
 <h4 *ngIf="!fromCurrency">Currency Converter</h4>
 <div class="card p-3">
   <form [formGroup]="conversionForm" (ngSubmit)="getConversion()">

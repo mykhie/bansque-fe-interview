@@ -38,19 +38,19 @@ export class HttpService {
         return `A network related error occurred: ${error.message}`;
       }
       case 401: {
-        return `${error.message}`;
+        return `${error.error?.message}`;
       }
       case 404: {
-        return `Not Found: ${error.message}`;
+        return `Not Found: ${error.error?.message}`;
       }
       case 403: {
-        return `Access Denied: ${error.message}`;
+        return `Access Denied: ${error.error?.message}`;
       }
       case 500: {
-        return `Internal Server Error: ${error.message}`;
+        return `Internal Server Error: ${error.error?.message}`;
       }
       default: {
-        return `  ${error.message}`;
+        return `  ${error.error.message}`;
       }
     }
   }
