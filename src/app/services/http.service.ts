@@ -1,6 +1,5 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Router} from "@angular/router";
 import {config} from "../constants/constants"
 
 @Injectable({
@@ -9,11 +8,8 @@ import {config} from "../constants/constants"
 export class HttpService {
 
   httpClient: HttpClient;
-  router: Router;
-
   constructor(injector: Injector) {
     this.httpClient = injector.get(HttpClient);
-    this.router = injector.get(Router);
   }
 
 

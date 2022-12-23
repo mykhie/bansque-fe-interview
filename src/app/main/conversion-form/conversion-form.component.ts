@@ -25,6 +25,7 @@ export class ConversionFormComponent extends BaseComponent implements OnInit {
   @Input() showMoreLink = true;
   @Input() fromCurrency: any = undefined;
   @Output() readonly conversionEmitter = new EventEmitter<any>();
+  formSubmitted: boolean = false;
 
   constructor(injector: Injector) {
     super(injector);
@@ -54,6 +55,7 @@ export class ConversionFormComponent extends BaseComponent implements OnInit {
     }
     this.isConverting = true;
     this.conversionEmitter.emit(undefined);
+    this.formSubmitted = true;
     this.currencyService.getCurrencyConversion(data).subscribe(res => {
       this.isConverting = false;
       this.conversionEmitter.emit(res);
@@ -89,6 +91,10 @@ export class ConversionFormComponent extends BaseComponent implements OnInit {
     [a, b] = [b, a];
     this.conversionFormControl['from'].setValue(a);
     this.conversionFormControl['to'].setValue(b);
+    // update title if you are on more details
+    if (!this.showMoreLink) {
+      this.fromCurrency = a;
+    }
     this.getConversion();
   }
 
